@@ -19,8 +19,10 @@ public class Principal {
 			{
 				System.out.println(persona.toString());
 			}*/
-			
 			ordenarLista(listaPersonas);
+			
+			Archivo arc= new Archivo();
+			arc.crearArchivo(listaPersonas);
 			
 		} catch (Exception e) {
 			System.out.println("Error inesperado...\n");
