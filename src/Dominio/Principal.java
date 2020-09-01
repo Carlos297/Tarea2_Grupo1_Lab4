@@ -2,7 +2,9 @@ package Dominio;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Principal {
 
@@ -10,17 +12,20 @@ public class Principal {
 		
 		ArrayList<Persona> listaPersonas;
 		
-		try {
+		try 
+		{
 			listaPersonas = LeerArchivo("PersonasEmpresa.txt");
-			for (Persona persona : listaPersonas) {
+			/*for (Persona persona : listaPersonas) 
+			{
 				System.out.println(persona.toString());
-			}
+			}*/
+			
+			ordenarLista(listaPersonas);
 			
 		} catch (Exception e) {
 			System.out.println("Error inesperado...\n");
 			e.printStackTrace();
 		}
-		
 	}
 	
 	private static ArrayList<Persona> LeerArchivo(String ruta){
@@ -65,6 +70,23 @@ public class Principal {
 		return listaReturn;
 	}
 	
+	//metodo que ordena los apellidos de la Z-a
+	public static void ordenarLista(ArrayList<Persona> listaPersonas)
+	{
+		try 
+		{
+			Collections.sort(listaPersonas, Collections.reverseOrder((o1, o2) -> Normalizer.normalize(o1.getApellido(),Normalizer.Form.NFD).compareToIgnoreCase(Normalizer.normalize(o2.getApellido(),Normalizer.Form.NFD))));
+			for (Persona persona : listaPersonas) 
+			{
+				System.out.println(persona.toString());
+			}	
+		} catch (Exception e) 
+		{
+			System.out.println("Error inesperado...\n");
+			e.printStackTrace();
+		}
+	}
+	
 	public static boolean ValidarDni(String dni) throws ValidarDniException
 	{
 		Boolean auxDigitos = false;
@@ -80,6 +102,7 @@ public class Principal {
 		return auxDigitos;
 	}
 
+	
 }
 
 
